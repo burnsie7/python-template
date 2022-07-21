@@ -1,0 +1,6 @@
+python-dotenv
+pyyaml
+requests
+pre-commit
+pytest
+coloredlogs

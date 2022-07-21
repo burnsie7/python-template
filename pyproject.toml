@@ -1,0 +1,9 @@
+[tool.black]
+# Default exc /(\.direnv|\.eggs|\.git|\.hg|\.mypy_cache|\.nox|\.tox|\.venv|venv|\.svn|_build|buck-out|build|dist|__pypackages__)/]
+line-length = 100
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+\\pvenv
+)/
+'''
