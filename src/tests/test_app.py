@@ -8,9 +8,15 @@ from helpers.WidgetHelper import WidgetHelper
 
 """
 
+
 # Confirm the WidgetHelper returns the name given
 def test_widget_name():
     widget_helper = WidgetHelper("carl", {})
-    assert(widget_helper.name) == "carl"
+    assert (widget_helper.name) == "carl"
 
 
+# Confirm the WidgetHelper returns the name given
+def test_widget_data_type():
+    widget_helper = WidgetHelper("carl", {})
+    assert (type(widget_helper.widgets)) is dict
+    return
