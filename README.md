@@ -59,6 +59,11 @@ The testing library used is: `py.test`
 - To install: `pip install pytest`
 - To launch the test: `py.test`
 
+### Notes
+
+Unit test: You provide the input and assert the output.
+Integration testing: Test the components of the application are being called.
+
 ## TO DO
 
 Objective:

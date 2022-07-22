@@ -1,4 +1,5 @@
 import os
+
 import coloredlogs
 import json
 import logging
@@ -9,6 +10,11 @@ from dotenv import load_dotenv
 from datetime import datetime
 from helpers.WidgetHelper import WidgetHelper
 from src.const import REQUIRED_VARS
+
+# TODO: wrap logger
+# FILE_LOCATION = "helpers.WidgetHelper"
+# wrapped_logger(level, FILE_LOCATION, utils.format_message(functionName, msg, data))
+
 
 #  Example data
 WIDGET_HOLDER = {
@@ -80,6 +86,7 @@ class AppClass:
         """
         Inits Helper
         """
+        logger.debug("init widget")
         self.widget_helper = WidgetHelper(name, data)
 
     def use_widget_helper(self):
@@ -89,7 +96,7 @@ class AppClass:
         return self.widget_helper.use()
 
     def __del__(self):
-        print("Destructor called")
+        logger.info("Destructor called")
 
 
 def validate_required_vars():
@@ -108,11 +115,11 @@ if __name__ == "__main__":
     ## Loads the .env file for work happening locally
     ## If no env file are found we rely on env variables passed directly
 
-    date_now = str(datetime.now().strftime("%Y-%m-%d---%H-%M"))
+    date_now = str(datetime.now().strftime("%Y-%m-%d---%H:%M"))
+
     logger = logging.getLogger("app_logger")
     coloredlogs.install(fmt="%(levelname)s %(message)s", level="DEBUG", logger=logger)
-
-    # handler = logging.StreamHandler(sys.stdout)
+    logger.info("{} - Starting application".format(date_now))
 
     dotenv_path_local = os.path.join(os.path.dirname(__file__), "../../.env")
 
@@ -139,18 +146,8 @@ if __name__ == "__main__":
     app.widget_helper.name = "new_widget_helper"
     logger.info(app.widget_helper.name)
 
-    # What is the best way to modify the app.widget_helper.widgets?
-
     # Set queries inside class
-    app.widget_helper.set_queries_inside_class()
-    logger.info(app.widget_helper.get_queries())
-
-    # Set queries outside class
-    widgets = app.widget_helper.get_widgets()
-    queries = app.widget_helper.return_queries_outside_class(widgets)
-    app.widget_helper.set_queries(queries)
-    logger.info(app.widget_helper.get_queries())
-
-    # When do use properties and when not to use properties?
+    app.widget_helper.flatten_queries_from_widgets()
+    logger.info(app.widget_helper.queries)
 
     exit(0)

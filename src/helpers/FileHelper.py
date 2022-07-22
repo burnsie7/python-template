@@ -7,25 +7,7 @@ from os.path import join, dirname
 
 from src.utils import create_message
 
-FILE_LOCATION = "subdir.ClassDef"
-
 logger = logging.getLogger("app_logger")
-
-
-def logDebug(functionName, msg, data):
-    logger.debug("DEBUG: {}.{} - {} - {}".format(FILE_LOCATION, functionName, msg, data))
-
-
-def logInfo(functionName, msg, data):
-    logger.info("INFO: {}.{} - {} - {}".format(FILE_LOCATION, functionName, msg, data))
-
-
-def logWarn(functionName, msg, data):
-    logger.info("Warn: {}.{} - {} - {}".format(FILE_LOCATION, functionName, msg, data))
-
-
-def logError(functionName, msg, data):
-    logger.error("ERROR: {}.{} - {} - {}".format(FILE_LOCATION, functionName, msg, data))
 
 
 class FileHelper:
@@ -42,7 +24,7 @@ class FileHelper:
         relative_file_path = os.path.join(os.path.dirname(__file__), file_path)
         if os.path.isfile(relative_file_path):
             return relative_file_path
-        logError("get_relative_file_path", "Invalid file path", relative_file_path)
+        logger.error("Invalid file path: {}".format(relative_file_path))
         return None
 
     def read_json_file(self):
@@ -69,4 +51,4 @@ class FileHelper:
             json.dump(json_data, output, sort_keys=True, indent=4, separators=(",", ": "))
 
     def __del__(self):
-        print("Destructor called")
+        logger.info("Destructor called")
